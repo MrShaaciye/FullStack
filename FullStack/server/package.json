@@ -1,0 +1,24 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.jsx",
+	"scripts": {
+		"start": "nodemon server.jsx",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Shaiye",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^8.5.1",
+		"moment": "^2.29.4",
+		"mysql2": "^2.3.3",
+		"sequelize": "^6.26.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20"
+	}
+}

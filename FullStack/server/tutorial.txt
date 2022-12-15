@@ -1,0 +1,296 @@
+NODEJS
+npm i bcrypt cors express jsonwebtoken moment mysql2 sequelize
+
+REACT-APP
+npx create-react-app .
+npm audit fix --force
+npm i @emotion/react @emotion/styled @mui/material axios formik react-datepicker react-router-dom yup
+npm start
+
+https://github.com/jquense/yup
+
+==================
+DELETE THE FOLLOWING FILES
+App.test.js
+index.css
+logo.svg
+setupTests.js
+
+==================
+OPEN App.css DELETE 
+.App-logo - @keyframes App-logo-spin 
+
+==================
+OPEN index.js DELETE
+import './index.css';
+
+==================
+OPEN App.js DELETE
+<header></header>
+AND ALSO DELETE
+import logo from './logo.svg';
+
+==================
+
+
+/*
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+
+	const [formValues, setFormValues] = useState(null);
+	const navigate = useNavigate();
+
+	const initialValues = {
+		title: "",
+		text: "",
+		username: "",
+	};
+
+	const savedValues = {
+		title: "Electronic",
+		text: "This Electronic is so helpful machine",
+		username: "Ibrahim",
+		phoneNumbers: ["", ""],
+		phoneNumber: ["123"],
+		address: "30 Street",
+	};
+
+	const validationSchema = yup.object().shape({
+		title: yup.string().min(3).max(30).required(),
+		text: yup.string().min(5).max(100).required(),
+		username: yup.string().min(3).max(15).required(),
+		phoneNumber: yup.array().min(3).max(15).of(yup.string().trim().required()),
+	});
+
+	const validateAddressField = (value) => {
+		let error;
+		if (!value) {
+			error = "Address is a required field";
+		}
+		return error;
+	};
+
+	const onSubmit = async (post, onSubmitProps) => {
+		console.log("Form Data", post);
+		await axios.post("http://localhost:3000/api/v1/post", post).then((res) => {
+			setTimeout(() => {
+				alert(JSON.stringify(res, null, 2));
+			}, 500);
+			console.log("Submit props", onSubmitProps);
+			onSubmitProps.setSubmitting(false);
+			onSubmitProps.resetForm();
+			navigate(`/findAll`);
+		});
+	};
+
+
+return (
+	<div className="create">
+		<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+			
+			<Form className="container">
+
+				<label htmlFor="title">
+					Title:
+					<ErrorMessage className="error" name="title" component="span" />
+				</label>
+				<Field type="text" className="field" id="title" name="title" placeholder="Enter Title..." />
+
+				<label htmlFor="text">
+					Text:
+					<ErrorMessage className="error" name="text" component="span" />
+				</label>
+				<Field type="text" className="field" id="text" name="text" placeholder="Enter Text..." />
+				
+				<label htmlFor="username">
+					User:
+					<ErrorMessage className="error" name="username" component="span" />
+				</label>
+				<Field type="text" className="field" id="username" name="username" placeholder="Enter Username..." />
+				<label htmlFor="address">
+
+				<label htmlFor="facebook">
+					Facebook Profile:
+					<ErrorMessage className="error" name="social.facebook" component="span" />
+				</label>
+				<Field type="text" className="field" id="facebook" name="social.facebook" />
+
+				<label htmlFor="twitter">
+					Twitter Profile:
+					<ErrorMessage className="error" name="social.twitter" component="span" />
+				</label>
+				<Field type="text" className="field" id="twitter" name="social.twitter" />
+
+				<label htmlFor="primaryPhone">
+					Primary Phone number:
+					<ErrorMessage className="error" name="phoneNumbers[0]" component="span" />
+				</label>
+				<Field type="text" className="field" id="primaryPhone" name="phoneNumbers[0]" placeholder="Enter Primary Phone Number..." />
+
+				<label htmlFor="secondaryPhone">
+					Secondary Phone number:
+					<ErrorMessage className="error" name="phoneNumbers[1]" component="span" />
+				</label>
+				<Field type="text" className="field" id="secondaryPhone" name="phoneNumbers[1]" placeholder="Enter Secondary Phone Number..." />
+
+				<FieldArray name="phoneNumber">
+					{(fieldArrayProps) => {
+						console.log("Field Array Props", fieldArrayProps);
+						const { push, remove, form } = fieldArrayProps;
+						const { values } = form;
+						const { phoneNumber } = values;
+						return (
+							<div>
+								{phoneNumber.map((phoneNum, index) => {
+									return (
+										<div key={index}>
+											<Field type="text" className="field" id="phoneNumber" name={`phoneNumber[${index}]`} placeholder="Enter Phone Number..." />
+											{index > 0 && (
+												<button type="button" onClick={() => remove(index)} >
+													-
+												</button>
+											)}
+											{index < 2 && (
+												<button type="button" onClick={() => push("")}>
+													+
+												</button>
+											)}
+										</div>
+									);
+								})}
+							</div>
+						);
+					}}
+				</FieldArray>
+
+				<button type="button" onClick={() => formik.validateField("address")}>
+					Validate Address field
+				</button>
+				<button type="button" onClick={() => formik.validateForm()}>
+					Validate All fields
+				</button>
+				<button type="button" onClick={() => formik.setFieldTouched("address")}>
+					Visited Address field
+				</button>
+				<button type="button" onClick={() => formik.setTouched({title: true, text: true, username: true, phoneNumber: true, address: true, })} >
+					Visited All fields
+				</button>
+					
+				<label>
+					Post:
+					<ErrorMessage className="error" name="postId" component="span" />
+				</label>	
+				<Field as="select" className="field" name="postId">
+					<option disabled value="">
+						Select Posts...
+					</option>
+					{comments.map((comment) => {
+						return (
+							<option value={comment.id}>
+								{`${comment.id}. `}
+								{comment.commentBody}
+							</option>
+						);
+					})}
+				</Field> 
+
+				<label htmlFor="address">
+					Address:
+					<ErrorMessage className="error" name="address" component="span" />
+				</label>
+				<FastField name="address">
+					{(props) => {
+						console.log("Feild Render => ");
+						const { field, form, meta } = props;
+						return (
+							<div>
+								<input type="text" className="field" id="address" placeholder="Enter Username..." {...field} validate={validateAddressField}  />
+								{meta.touched && meta.error ? <div>{meta.error}</div> : null}
+							</div>
+						);
+					}}
+				</FastField>
+
+				<button type="button" onClick={() => formik.validateField("address")}>
+					Validate Address field
+				</button>
+
+				<button type="button" onClick={() => formik.validateForm()}>
+					Validate All fields
+				</button>
+
+				<button type="button" onClick={() => formik.setFieldTouched("address")}>
+					Visited Address field
+				</button>
+				
+				<button
+					type="button"
+					onClick={() =>
+						formik.setTouched({
+							title: true,
+							text: true,
+							username: true,
+							phoneNumber: true,
+							address: true,
+						})
+					}
+				>
+					Visited All fields
+				</button>
+
+				<button type="button" onClick={() => setFormValues(savedValues)}>
+					Load saved data
+				</button>
+
+				<button type="reset">Reset Form Data</button>
+
+				<button type="submit">Create Post</button>
+			</Form>
+		</Formik>
+	</div>
+	);
+*/
+
+
+
+/* exports.create = async (req, res) => {
+	const transactions = await sequelize.transaction();
+	try {
+		const trim = (noSpace) => {
+			return noSpace.replace(/\s/g, ``);
+		};
+		const { username, password } = req.body;
+		const users = await userModel.findOne({
+			where: { username: trim(username) },
+			transaction: transactions,
+		});
+
+		if (users !== null) {
+			await transactions.rollback();
+			res.json(`username must be unique..`);
+		} else {
+			const user = await userModel.create(
+				{
+					username: trim(username),
+					password: trim(password),
+				},
+				{
+					transaction: transactions,
+				}
+			);
+			await transactions.commit();
+			res.status(200).json(user);
+		}
+	} catch (err) {
+		await transactions.rollback();
+		const messages = {};
+		let message;
+		err.errors.forEach((error) => {
+			messages[error.path] = error.message;
+			message = messages[error.path];
+		});
+		res.status(500).json(message);
+	}
+};*/
+
+
+
