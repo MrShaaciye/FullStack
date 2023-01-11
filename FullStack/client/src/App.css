@@ -43,7 +43,7 @@ body {
 .post .title {
 	flex: 20%;
 	border-bottom: 1px solid lightgray;
-	background-color: dodgerblue;
+	background-color: darkslateblue;
 	display: grid;
 	place-content: center;
 	color: white;
@@ -61,7 +61,7 @@ body {
 	display: flex;
 	align-items: center;
 	padding-left: 15px;
-	background-color: dodgerblue;
+	background-color: darkslateblue;
 	color: white;
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
@@ -84,7 +84,7 @@ body {
 	width: 500px;
 	height: auto;
 	padding: 20px;
-	border: 5px solid dodgerblue;
+	border: 5px solid darkslateblue;
 	border-radius: 10px;
 }
 
@@ -109,7 +109,7 @@ button {
 
 button:hover {
 	cursor: pointer;
-	background-color: dodgerblue;
+	background-color: darkslateblue;
 }
 
 .error {
@@ -120,7 +120,7 @@ button:hover {
 .navbar {
 	width: 100%;
 	height: 70px;
-	background-color: dodgerblue;
+	background-color: darkslateblue;
 	display: flex;
 	align-items: center;
 	font-family: Arial, Helvetica, sans-serif;
@@ -128,9 +128,14 @@ button:hover {
 
 .navbar a {
 	margin-left: 20px;
-	text-decoration: none;
+	/* text-decoration: none; */
 	color: white;
 }
+
+/* .navbar a.active {
+	text-decoration: none;
+	font-weight: bold;
+} */
 
 /* INDIVIDUAL POST*/
 .postPage {
@@ -205,3 +210,18 @@ button:hover {
 	text-decoration: none !important;
 	font-size: 15px;
 }
+
+/* NavBar CSS */
+/* nav {
+	background-color: aliceblue;
+	padding: 16px 32px;
+}
+
+nav a {
+	margin-right: 16px;
+}
+
+nav a.active {
+	text-decoration: none;
+	font-weight: bold;
+} */

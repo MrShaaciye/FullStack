@@ -17,8 +17,6 @@
 		"@testing-library/user-event": "^13.5.0",
 		"axios": "^0.27.2",
 		"formik": "^2.2.9",
-		"install": "^0.13.0",
-		"npm": "^8.19.3",
 		"react": "^18.2.0",
 		"react-datepicker": "^4.8.0",
 		"react-dom": "^18.2.0",

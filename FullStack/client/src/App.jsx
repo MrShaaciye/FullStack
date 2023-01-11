@@ -1,21 +1,27 @@
-import { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import "./App.css";
+// import Navbar from "./pages/navbar/Navbar";
 import axios from "axios";
 import { AuthContext } from "./helpers/AuthContext";
 
-import CreatePost from "./pages/posts/Create";
-import FindAllPosts from "./pages/posts/FindAll";
-import FindByIdPost from "./pages/posts/FindById";
-import UpdatePost from "./pages/posts/Update";
+/* Import post pages */
+const CreatePost = lazy(() => import("./pages/posts/Create"));
+const FindAllPosts = lazy(() => import("./pages/posts/FindAll"));
+const FindByIdPost = lazy(() => import("./pages/posts/FindById"));
+const UpdatePost = lazy(() => import("./pages/posts/Update"));
 
-import CreateUser from "./pages/users/Create";
-import FindAllUsers from "./pages/users/FindAll";
-import UpdateUser from "./pages/users/Update";
-import Login from "./pages/users/Login";
-import Profile from "./pages/users/Profile";
+/* Import user pages */
+const CreateUser = lazy(() => import("./pages/users/Create"));
+const FindAllUsers = lazy(() => import("./pages/users/FindAll"));
+const UpdateUser = lazy(() => import("./pages/users/Update"));
+const Login = lazy(() => import("./pages/users/Login"));
+const Profile = lazy(() => import("./pages/users/Profile"));
 
-import PageNotFound from "./pages/notfound/PageNotFound";
+/* Import Page not found page */
+const PageNotFound = lazy(() => import("./pages/notfound/PageNotFound"));
+
+/* https://www.youtube.com/watch?v=UWYOC8g5N_0&list=PLC3y8-rFHvwjkxt8TOteFdT_YmzwpBlrG&index=1 */
 
 const App = () => {
 	const log = useRef(true);
@@ -39,6 +45,13 @@ const App = () => {
 		setAuthState({ username: ``, id: 0, status: false });
 	};
 
+	const navLinkStyles = ({ isActive }) => {
+		return {
+			fontWeight: isActive ? "bold" : "normal",
+			textDecoration: isActive ? "none" : "underline",
+		};
+	};
+
 	return (
 		<div className="App">
 			<AuthContext.Provider value={{ authState, setAuthState }}>
@@ -46,37 +59,50 @@ const App = () => {
 					<div className="navbar">
 						{!authState.status ? (
 							<>
-								<Link to="/">Login</Link>
-								<Link to="/user/create">Create new account</Link>
+								<NavLink style={navLinkStyles} to="/">
+									Login
+								</NavLink>
+								<NavLink style={navLinkStyles} to="/user/create">
+									Create new account
+								</NavLink>
 							</>
 						) : (
 							<>
-								<Link to="/user/findAll">Find All Users</Link>
-								<Link to="/post/create">Create A Post</Link>
-								<Link to="/post/findAll">Find All Posts</Link>
-								<Link to="/" onClick={logout}>
+								<NavLink style={navLinkStyles} to="/user/findAll">
+									Find All Users
+								</NavLink>
+								<NavLink style={navLinkStyles} to="/post/create">
+									Create A Post
+								</NavLink>
+								<NavLink style={navLinkStyles} to="/post/findAll">
+									Find All Posts
+								</NavLink>
+								<NavLink style={navLinkStyles} to="/" onClick={logout}>
 									Logout
-								</Link>
+								</NavLink>
 								<h4 className="right">{authState.username.toUpperCase()}</h4>
 							</>
 						)}
 					</div>
-					<Routes>
-						{/* Post Router */}
-						<Route path="/post/create" exact element={<CreatePost />} />
-						<Route path="/post/findAll" exact element={<FindAllPosts />} />
-						<Route path="/post/findById/:id" exact element={<FindByIdPost />} />
-						<Route path="/post/update/:id" exact element={<UpdatePost />} />
+					{/* <Navbar /> */}
+					<Suspense fallback="Loading... please wait">
+						<Routes>
+							{/* Post Router */}
+							<Route path="/post/findAll" exact element={<FindAllPosts />} />
+							<Route path="/post/create" exact element={<CreatePost />} />
+							<Route path="/post/findById/:id" exact element={<FindByIdPost />} />
+							<Route path="/post/update/:id" exact element={<UpdatePost />} />
 
-						{/* User Router */}
-						<Route path="/user/create" exact element={<CreateUser />} />
-						<Route path="/user/findAll" exact element={<FindAllUsers />} />
-						<Route path="/user/update/:id" exact element={<UpdateUser />} />
-						<Route path="/" exact element={<Login />} />
-						<Route path="/profile/:id" exact element={<Profile />} />
+							{/* User Router */}
+							<Route path="/user/findAll" exact element={<FindAllUsers />} />
+							<Route path="/user/create" exact element={<CreateUser />} />
+							<Route path="/user/update/:id" exact element={<UpdateUser />} />
+							<Route path="/" exact element={<Login />} />
+							<Route path="/profile/:id" exact element={<Profile />} />
 
-						<Route path="*" exact element={<PageNotFound />} />
-					</Routes>
+							<Route path="*" exact element={<PageNotFound />} />
+						</Routes>
+					</Suspense>
 				</Router>
 			</AuthContext.Provider>
 		</div>

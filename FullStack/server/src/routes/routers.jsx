@@ -1,6 +1,9 @@
 module.exports = (app) => {
+	/* Import Router from Express & middleware */
 	const router = require(`express`).Router();
 	const token = require(`../middleware/auth.jsx`);
+
+	/* Import Controllers */
 	const userCtrl = require(`../controllers/user.controller.jsx`);
 	const postCtrl = require(`../controllers/post.controller.jsx`);
 	const commentCtrl = require(`../controllers/comment.controller.jsx`);

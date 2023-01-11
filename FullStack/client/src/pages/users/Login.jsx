@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../helpers/AuthContext";
 import { Button, Box, TextField } from "@mui/material";
 import { Formik, Form, FastField } from "formik";
@@ -31,7 +31,7 @@ const Login = () => {
 					setAuthState({ username: res.data.username, id: res.data.id, status: true });
 					onSubmitProps.resetForm();
 					onSubmitProps.setSubmitting(false);
-					navigate(`/post/findAll`);
+					navigate(`/post/findAll`, { replace: true });
 				}, 500);
 			}
 		});

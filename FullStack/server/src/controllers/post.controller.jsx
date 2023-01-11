@@ -49,7 +49,7 @@ exports.findAll = async (req, res) => {
 		});
 		const liked = await likeModel.findAll({ where: { userId: req.user.id }, transaction: transactions, paranoid: false });
 		transactions.commit();
-		return res.status(200).json({ posts: posts, liked: liked });
+		return res.status(200).json({ posts: posts, liked: liked, finder: finder });
 	} catch (err) {
 		await transactions.rollback();
 		return res.status(500).json(err);
